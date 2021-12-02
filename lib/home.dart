@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,6 +20,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.low);
+
+    print(position);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,23 +71,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                       color: Colors.white,
                     ),
-                    child: Text(
-                      "На Карте",
-
-                      // title: Text(
-                      //   'На карте',
-                      //   style: TextStyle(color: Colors.blueGrey[600]),
-                      // ),
-                      // onTap: () {
-                      //   ElevatedButton(
-                      //     onPressed: () {
-                      //       print('object');
-                      //       Navigator.pushNamedAndRemoveUntil(
-                      //           context, '/2', (route) => false);
-                      //     },
-                      //     child: null,
-                      //   );
-                      // },
+                    child: RaisedButton(
+                      onPressed: () {
+                        getLocation();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/4', (route) => true);
+                      },
+                      child: Text("На Карте"),
                     ),
                   ),
                 ],
